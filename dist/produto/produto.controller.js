@@ -60,6 +60,7 @@ __decorate([
 ], ProdutoController.prototype, "criaNovo", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

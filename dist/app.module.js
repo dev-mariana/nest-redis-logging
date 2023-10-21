@@ -17,6 +17,7 @@ const pedido_module_1 = require("./pedido/pedido.module");
 const core_1 = require("@nestjs/core");
 const filtro_de_excecao_global_1 = require("./filtros/filtro-de-excecao-global");
 const cache_manager_1 = require("@nestjs/cache-manager");
+const cache_manager_redis_yet_1 = require("cache-manager-redis-yet");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -32,7 +33,12 @@ AppModule = __decorate([
                 inject: [postgres_config_service_1.PostgresConfigService],
             }),
             pedido_module_1.PedidoModule,
-            cache_manager_1.CacheModule.register({ isGlobal: true, ttl: 10000 }),
+            cache_manager_1.CacheModule.registerAsync({
+                useFactory: async () => ({
+                    store: await (0, cache_manager_redis_yet_1.redisStore)({ ttl: 10 * 1000 }),
+                }),
+                isGlobal: true,
+            }),
         ],
         providers: [
             {
